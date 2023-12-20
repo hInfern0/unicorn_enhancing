@@ -251,6 +251,7 @@ func (u *uc) IncreaseCounter(model uint64) error {
 }
 
 func (u *uc) GetCounter() uint64 {
-	return C.uc_get_clock(u.handle)
+	ret := C.uc_get_clock(u.handle)
+	return uint64(ret)
 }
 
