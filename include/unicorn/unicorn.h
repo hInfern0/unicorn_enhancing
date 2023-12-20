@@ -1355,6 +1355,10 @@ size_t uc_context_size(uc_engine *uc);
 UNICORN_EXPORT
 uc_err uc_context_free(uc_context *context);
 
+
+UNICORN_EXPORT
+uc_err uc_increase_clock(uc_engine *uc, size_t clock );
+
 #ifdef __cplusplus
 }
 #endif
