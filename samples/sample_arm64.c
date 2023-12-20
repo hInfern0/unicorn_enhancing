@@ -10,8 +10,8 @@
 #define ARM64_CODE                                                             \
     "\xab\x05\x00\xb8\xaf\x05\x40\x38" // str w11, [x13], #0; ldrb w15, [x13],
                                        // #0
-//#define ARM64_CODE_EB "\xb8\x00\x05\xab\x38\x40\x05\xaf" // str w11, [x13];
-// ldrb w15, [x13]
+// #define ARM64_CODE_EB "\xb8\x00\x05\xab\x38\x40\x05\xaf" // str w11, [x13];
+//  ldrb w15, [x13]
 #define ARM64_CODE_EB ARM64_CODE
 
 // mrs        x2, tpidrro_el0
@@ -197,7 +197,7 @@ static void test_arm64eb(void)
     uc_close(uc);
 }
 
-static void test_arm64_sctlr()
+static void test_arm64_sctlr(void)
 {
     uc_engine *uc;
     uc_err err;
@@ -248,7 +248,7 @@ static uint32_t hook_mrs(uc_engine *uc, uc_arm64_reg reg,
     return 1;
 }
 
-static void test_arm64_hook_mrs()
+static void test_arm64_hook_mrs(void)
 {
     uc_engine *uc;
     uc_err err;

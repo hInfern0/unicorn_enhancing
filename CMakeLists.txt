@@ -17,6 +17,11 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.15")
     cmake_policy(SET CMP0092 NEW)
 endif()
 
+option(ZIG_BUILD "Enable zig build" OFF)
+if(ZIG_BUILD)
+    include(cmake/zig.cmake)
+endif()
+
 # Workaround to fix wrong compiler on macos.
 if(APPLE AND NOT CMAKE_C_COMPILER)
     set(CMAKE_C_COMPILER "/usr/bin/cc")
@@ -45,9 +50,9 @@ set(CMAKE_C_STANDARD 11)
 
 set(UNICORN_VERSION_MAJOR 2)
 set(UNICORN_VERSION_MINOR 0)
-set(UNICORN_VERSION_PATCH 1)
+set(UNICORN_VERSION_PATCH 2)
 
-include(bundle_static.cmake)
+include(cmake/bundle_static.cmake)
 
 # Even though we generate shared lib and static archive at the same time, we still support
 # using unicorn as a subdirectory so we have to respect BUILD_SHARED_LIBS.
@@ -446,6 +451,8 @@ set(UNICORN_ARCH_COMMON
     qemu/accel/tcg/tcg-runtime-gvec.c
     qemu/accel/tcg/translate-all.c
     qemu/accel/tcg/translator.c
+
+    qemu/softmmu/unicorn_vtlb.c
 )
 
 if(UNICORN_HAS_X86)
@@ -1188,7 +1195,7 @@ set(UNICORN_LINK_LIBRARIES ${UNICORN_LINK_LIBRARIES} unicorn-common)
 if(UNICORN_HAS_X86)
     set(UNICORN_COMPILE_OPTIONS ${UNICORN_COMPILE_OPTIONS} -DUNICORN_HAS_X86)
     set(UNICORN_LINK_LIBRARIES ${UNICORN_LINK_LIBRARIES} x86_64-softmmu)
-    set(UNICORN_SAMPLE_FILE ${UNICORN_SAMPLE_FILE} sample_x86 sample_x86_32_gdt_and_seg_regs sample_batch_reg mem_apis shellcode)
+    set(UNICORN_SAMPLE_FILE ${UNICORN_SAMPLE_FILE} sample_x86 sample_x86_32_gdt_and_seg_regs sample_batch_reg mem_apis shellcode sample_mmu)
     target_link_libraries(x86_64-softmmu PRIVATE unicorn-common)
     set(UNICORN_TEST_FILE ${UNICORN_TEST_FILE} test_x86)
 endif()
