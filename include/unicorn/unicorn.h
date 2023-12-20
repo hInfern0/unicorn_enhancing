@@ -1356,6 +1356,7 @@ UNICORN_EXPORT
 uc_err uc_context_free(uc_context *context);
 
 
+// test
 UNICORN_EXPORT
 uc_err uc_increase_clock(uc_engine *uc, size_t clock );
 
