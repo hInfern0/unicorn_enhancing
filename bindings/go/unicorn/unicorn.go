@@ -63,6 +63,8 @@ type Unicorn interface {
 	RegWriteX86Msr(reg uint64, val uint64) error
 	RegReadX86Msr(reg uint64) (uint64, error)
 	SetCPUModel(model int) error
+
+	IncreaseCounter(size uint64 ) error
 }
 
 type uc struct {
@@ -238,5 +240,11 @@ func (u *uc) Handle() *C.uc_engine {
 
 func (u *uc) SetCPUModel(model int) error {
 	ucerr := C.uc_ctl_set_cpu_model_helper(u.handle, C.int(model))
+	return errReturn(ucerr)
+}
+
+
+func (u *uc) IncreaseCounter(model uint64) error {
+	ucerr := C.uc_increase_clock(u.handle, C.uint64_t(model))
 	return errReturn(ucerr)
 }
