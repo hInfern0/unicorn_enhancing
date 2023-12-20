@@ -84,11 +84,11 @@ func Version() (int, int) {
 }
 
 func NewUnicorn(arch, mode int) (Unicorn, error) {
-	// disable checking for version until fully understand the shit out of it
-	// major, minor := Version()
-	// if major != C.UC_API_MAJOR || minor != C.UC_API_MINOR {
-	// 	return nil, UcError(ERR_VERSION)
-	// }
+	//disable checking for version until fully understand the shit out of it
+	major, minor := Version()
+	if major != C.UC_API_MAJOR || minor != C.UC_API_MINOR {
+		return nil, UcError(ERR_VERSION)
+	}
 	var handle *C.uc_engine
 	if ucerr := C.uc_open(C.uc_arch(arch), C.uc_mode(mode), &handle); ucerr != ERR_OK {
 		return nil, UcError(ucerr)
