@@ -1361,7 +1361,7 @@ UNICORN_EXPORT
 uc_err uc_increase_clock(uc_engine *uc, size_t clock );
 
 UNICORN_EXPORT
-size_t uc_get_clock(uc_engine *uc);
+size_t uc_get_clock(uc_engine *uc, size_t *res);
 
 #ifdef __cplusplus
 }
