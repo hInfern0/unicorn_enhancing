@@ -882,6 +882,20 @@ static void clear_deleted_hooks(uc_engine *uc)
 }
 
 UNICORN_EXPORT
+uc_err uc_increase_clock(uc_engine *uc, size_t clock )
+{
+
+    UC_INIT(uc);
+    // check for buffer overflow 
+    if (clock + uc->emu_counter < 0 || clock + uc->emu_counter > SIZE_MAX)
+        return UC_ERR_ARG;
+    uc->emu_counter += clock ; 
+
+    return UC_ERR_OK;
+
+}
+
+UNICORN_EXPORT
 uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
                     uint64_t timeout, size_t count)
 {
