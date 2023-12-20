@@ -65,6 +65,7 @@ type Unicorn interface {
 	SetCPUModel(model int) error
 
 	IncreaseCounter(size uint64 ) error
+	GetCounter() uint64
 }
 
 type uc struct {
@@ -248,3 +249,8 @@ func (u *uc) IncreaseCounter(model uint64) error {
 	ucerr := C.uc_increase_clock(u.handle, C.uint64_t(model))
 	return errReturn(ucerr)
 }
+
+func (u *uc) GetCounter() uint64 {
+	return C.uc_get_clock(u.handle)
+}
+
